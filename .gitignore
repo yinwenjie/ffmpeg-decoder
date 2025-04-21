@@ -1,0 +1,4 @@
+build
+third_party/FFmpeg
+third_party/ffmpeg_output
+*.264

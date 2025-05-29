@@ -33,6 +33,7 @@ set(VIDC_TEST_SOURCES
     main.cpp
     src/io_data.cpp
     src/video_decoder_core.cpp
+    src/FFStreamParser.cpp
 )
 
 add_executable(ffmpeg-decoder ${VIDC_TEST_SOURCES})

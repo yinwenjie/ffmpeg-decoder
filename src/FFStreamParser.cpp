@@ -64,6 +64,12 @@ int FFStreamParser::init() {
     codecpar = mStream->codecpar;
     mWidth = codecpar->width ? codecpar->width : 320;
     mHeight = codecpar->width ? codecpar->width : 320;
+    mProfile = codecpar->profile;
+    mLevel = codecpar->level;
+    mPixFmt = codecpar->format;
+    std::cout << "[" << mSessionId << "]: width:" << mWidth
+              << ", height: " << mHeight << ", profile: " << mProfile
+              << ", level: " << mLevel << ", pixfmt:" << mPixFmt << std::endl;
 
     AVRational framerate = av_guess_frame_rate(mFmtCtx, mStream, nullptr);
     mFps_n = framerate.num;

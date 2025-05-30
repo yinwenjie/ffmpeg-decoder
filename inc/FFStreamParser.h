@@ -44,6 +44,9 @@ class FFStreamParser {
     int mWidth = 0;
     int mHeight = 0;
     int mCodecFmt = 0;
+    int mProfile = 0;
+    int mLevel = 0;
+    int mPixFmt = 0;
     int mTotalFrameCnt = 0;
 
     std::unordered_map<int, uint64_t> mPktPosition;

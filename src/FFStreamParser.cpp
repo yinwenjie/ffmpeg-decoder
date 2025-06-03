@@ -51,6 +51,7 @@ int FFStreamParser::init() {
                   << std::endl;
     }
 
+    // Analyse best stream
     ret = av_find_best_stream(mFmtCtx, AVMEDIA_TYPE_VIDEO, -1, -1, nullptr, 0);
     if (ret) {
         std::cerr << "[" << mSessionId
@@ -62,14 +63,24 @@ int FFStreamParser::init() {
 
     mStream = mFmtCtx->streams[video_idx];
     codecpar = mStream->codecpar;
+    int mediaType = codecpar->codec_type;
     mWidth = codecpar->width ? codecpar->width : 320;
     mHeight = codecpar->width ? codecpar->width : 320;
     mProfile = codecpar->profile;
     mLevel = codecpar->level;
     mPixFmt = codecpar->format;
-    std::cout << "[" << mSessionId << "]: width:" << mWidth
-              << ", height: " << mHeight << ", profile: " << mProfile
-              << ", level: " << mLevel << ", pixfmt:" << mPixFmt << std::endl;
+    std::cout << "[" << mSessionId << "]: Media type" << mediaType << ", CodecTAg:" << codecpar->codec_tag <<std::endl;
+    std::cout << "[" << mSessionId << "]: width:" << mWidth << ", height: " << mHeight
+              << ", profile: " << mProfile << ", level: " << mLevel
+              << ", pixfmt:" << mPixFmt << ", bitrate:" << codecpar->bit_rate
+              << ", bits_per_coded_sample:" << codecpar->bits_per_coded_sample
+              << ", bits_per_raw_sample:" << codecpar->bits_per_raw_sample
+              << ", SAR:" << codecpar->sample_aspect_ratio.num << "x" << codecpar->sample_aspect_ratio.den
+              << ", frame rate: " << codecpar->framerate.num << "/" << codecpar->framerate.den << std::endl;
+    std::cout << "[" << mSessionId << "]: field_order:" << codecpar->field_order
+              << ", color_range:" << codecpar->color_range << ", color_primaries:" << codecpar->color_primaries
+              << ", color_trc:" << codecpar->color_trc << ", color_space: " << codecpar->color_space 
+              << ", video_delay:" << codecpar->video_delay << std::endl;
 
     AVRational framerate = av_guess_frame_rate(mFmtCtx, mStream, nullptr);
     mFps_n = framerate.num;

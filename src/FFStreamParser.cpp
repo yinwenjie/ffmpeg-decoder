@@ -121,6 +121,15 @@ int FFStreamParser::init() {
         }
     }
 
+    int numStreams = mFmtCtx->nb_streams;
+    for (size_t i = 0; i < numStreams; i++) {
+        if (i == video_idx) {
+            continue;
+        }
+        std::cout << "[" << mSessionId << "]: StreamID: " << i << " ";
+        std::cout << "[" << mSessionId << "]: Media type" << mediaType << ", CodecTAg:" << codecpar->codec_tag <<std::endl;
+    }
+
     mPkt = av_packet_alloc();
     if (!mPkt) {
         std::cerr << "[" << mSessionId << "]: Error: cannot allocate AVPacket"
